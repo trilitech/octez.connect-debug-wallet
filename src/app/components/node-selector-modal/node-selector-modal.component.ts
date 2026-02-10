@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ApiService } from 'src/app/services/api.service';
-import { NetworkType } from '@airgap/beacon-types';
+import { NetworkType } from '@tezos-x/octez.connect-types';
 @Component({
   selector: 'app-node-selector-modal',
   templateUrl: './node-selector-modal.component.html',
@@ -13,8 +13,7 @@ export class NodeSelectorModalComponent implements OnInit {
   public networks: string[] = [
     NetworkType.MAINNET,
     NetworkType.GRANADANET,
-    NetworkType.HANGZHOUNET,
-    NetworkType.IDIAZABALNET,
+    NetworkType.HANGZHOUNET
   ];
 
   public nodes: [string, { selected: boolean; url: string }[]][] = [];

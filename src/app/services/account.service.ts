@@ -1,4 +1,4 @@
-import { NetworkType } from '@airgap/beacon-types';
+import { NetworkType } from '@tezos-x/octez.connect-types';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { StorageService } from './storage.service';

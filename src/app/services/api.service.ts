@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { NetworkType } from '@airgap/beacon-types';
+import { NetworkType } from '@tezos-x/octez.connect-types';
 import { StorageService } from './storage.service';
 
 const defaultNodes = {
@@ -39,11 +39,7 @@ const defaultNodes = {
   [NetworkType.HANGZHOUNET]: {
     selected: 'https://hangzhounet.api.tez.ie',
     all: ['https://hangzhounet.api.tez.ie'],
-  },
-  [NetworkType.IDIAZABALNET]: {
-    selected: '',
-    all: [],
-  },
+  }
 };
 
 @Injectable({
@@ -57,7 +53,6 @@ export class ApiService {
     [NetworkType.FLORENCENET]: { selected: string; all: string[] };
     [NetworkType.GRANADANET]: { selected: string; all: string[] };
     [NetworkType.HANGZHOUNET]: { selected: string; all: string[] };
-    [NetworkType.IDIAZABALNET]: { selected: string; all: string[] };
   } = defaultNodes;
 
   constructor(

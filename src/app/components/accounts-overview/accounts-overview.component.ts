@@ -1,4 +1,4 @@
-import { NetworkType } from '@airgap/beacon-types';
+import { NetworkType } from '@tezos-x/octez.connect-types';
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
@@ -38,11 +38,14 @@ export class AccountsOverviewComponent implements OnInit {
   async addBeaconWallet() {
     await this.beacon.dAppClient.clearActiveAccount();
 
-    const permissions = await this.beacon.dAppClient.requestPermissions({
-      network: {
-        type: NetworkType.MAINNET,
-      },
-    });
+    this.beacon.dAppClient.network = { type: NetworkType.MAINNET };
+    const permissions = await this.beacon.dAppClient.requestPermissions({});
+    const publicKey =
+      permissions.publicKey ??
+      (await this.api.getPublicKeyForAddress(permissions.address))?.publicKey;
+    if (!publicKey) {
+      throw new Error('NO PUBLIC KEY FOUND, PLEASE REVEAL ADDRESS');
+    }
 
     const peers = await this.beacon.dAppClient.getPeers();
 
@@ -52,7 +55,7 @@ export class AccountsOverviewComponent implements OnInit {
 
     this.accountService.addOrUpdateAccount({
       address: permissions.address,
-      publicKey: permissions.publicKey,
+      publicKey,
       type: AccountType.BEACON,
       description: '',
       tags: [],

@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'beacon-debug-wallet'`, () => {
+  it(`should have as title 'octez.connect-debug-wallet'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('beacon-debug-wallet');
+    expect(app.title).toEqual('octez.connect-debug-wallet');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('beacon-debug-wallet app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('octez.connect-debug-wallet app is running!');
   });
 });

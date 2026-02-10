@@ -8,7 +8,7 @@ import {
   AccountType,
 } from 'src/app/services/account.service';
 
-import { NetworkType } from '@airgap/beacon-types';
+import { NetworkType } from '@tezos-x/octez.connect-types';
 
 @Component({
   selector: 'app-accounts-selection',

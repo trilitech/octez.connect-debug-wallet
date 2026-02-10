@@ -64,11 +64,12 @@ import 'zone.js'; // Included with Angular CLI.
  */
 
 (window as any).global = window;
-(window as any).process = {
-  env: {
-    NODE_DEBUG: false,
-  },
-};
+// Some dependencies (e.g. stream-browserify/readable-stream) expect a Node-like `process`
+// object with fields like `version`, `nextTick`, etc. A minimal stub will crash at runtime.
+// Use the standard browser shim instead.
+(window as any).process = require('process/browser');
+(window as any).process.env = (window as any).process.env || {};
+(window as any).process.env.NODE_DEBUG = false;
 // @ts-ignore
 window.Buffer = window.Buffer || require('buffer').Buffer;
 

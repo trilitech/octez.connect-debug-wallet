@@ -11,16 +11,16 @@ import {
   BeaconRequestOutputMessage,
   OperationResponseInput,
   SignPayloadResponseInput,
-} from '@airgap/beacon-types';
-import { DAppClient } from '@airgap/beacon-dapp';
-import { WalletClient } from '@airgap/beacon-wallet';
-import { LocalStorage, Serializer } from '@airgap/beacon-core';
+} from '@tezos-x/octez.connect-types';
+import { DAppClient } from '@tezos-x/octez.connect-dapp';
+import { WalletClient } from '@tezos-x/octez.connect-wallet';
+import { LocalStorage, Serializer } from '@tezos-x/octez.connect-core';
 import { Injectable } from '@angular/core';
 // import * as bs58check from 'bs58check';
 
 import { first } from 'rxjs/operators';
 
-import { RpcClient, OperationContents, OpKind } from '@taquito/rpc';
+import { RpcClient, OperationContents, OpKind } from '@tezos-x/octez.js-rpc';
 import { Account, AccountService, AccountType } from './account.service';
 import { AccountsSelectionComponent } from '../components/accounts-selection/accounts-selection.component';
 import { BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
@@ -47,13 +47,13 @@ export class BeaconService {
   ) {
     const storage = new LocalStorage('INCOMING');
     this.walletClient = new WalletClient({
-      name: 'Beacon Debug Wallet',
+      name: 'Octez Connect Debug Wallet',
       storage,
     });
 
     const storageDApp = new LocalStorage('OUTGOING');
     this.dAppClient = new DAppClient({
-      name: 'Beacon Debug Wallet',
+      name: 'Octez Connect Debug Wallet',
       storage: storageDApp,
     });
     this.logClient();
@@ -77,10 +77,6 @@ export class BeaconService {
     console.log('DAPP: getPeers', await this.dAppClient.getPeers());
     console.log('DAPP: getAccounts', await this.dAppClient.getAccounts());
     console.log('DAPP: getColorMode', await this.dAppClient.getColorMode());
-    console.log(
-      'DAPP: preferredNetwork',
-      await this.dAppClient.preferredNetwork
-    );
     console.log('DAPP: ---');
     console.log('DAPP: init');
   }
@@ -270,7 +266,7 @@ export class BeaconService {
         } as any)
     );
 
-    client
+    (client as any)
       .runOperation({
         operation: {
           branch,
@@ -279,7 +275,7 @@ export class BeaconService {
         },
         chain_id: chainId,
       })
-      .then((res) => {
+      .then((res: any) => {
         this.log.push([
           new Date(),
           `${message.appMetadata.name}: RUN OPERATION SUCCESS`,
@@ -288,7 +284,7 @@ export class BeaconService {
         ]);
         console.log('RUN_OPERATION RESULT', res);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         this.log.push([
           new Date(),
           `${message.appMetadata.name}: RUN OPERATION ERROR`,

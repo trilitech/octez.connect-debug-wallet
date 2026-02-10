@@ -3,8 +3,7 @@
 
 <div class="container-fluid px-md-5 pb-3">
   <h5 class="pb-5">
-    Beacon Debug Wallet is a watch-only wallet for developers to debug
-    <a href="https://walletbeacon.io">Beacon</a> enabled dApps.
+    Octez Connect Debug Wallet is a watch-only wallet for developers to debug octez.connect enabled dApps.
   </h5>
   <div class="row pb-4">
     <div class="col-12 col-md-3">
@@ -45,21 +44,6 @@
       <div class="card">
         <div class="card-body">
           <h3 class="card-title">Settings</h3>
-          <!-- <div class="d-flex justify-content-between align-items-center pb-3">
-            <div>
-              <p class="text-muted mb-1">
-                <small>Connected Beacon Node</small>
-              </p>
-              <h6>beacon-node-2.sky.papers.tech</h6>
-            </div>
-            <button
-              type="button"
-              class="btn btn-light"
-              (click)="openNodeSelectorModal()"
-            >
-              Change
-            </button>
-          </div> -->
           <div *ngFor="let node of selectedNodes">
             <p class="text-muted mb-0">
               <small>{{ node[0] }}</small>

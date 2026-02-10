@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "beacon-debug-wallet": {
+    "octez.connect-debug-wallet": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/beacon-debug-wallet",
+            "outputPath": "dist/octez.connect-debug-wallet",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -39,7 +39,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "2.5mb"
+                  "maximumError": "6mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -70,10 +70,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "beacon-debug-wallet:build:production"
+              "browserTarget": "octez.connect-debug-wallet:build:production"
             },
             "development": {
-              "browserTarget": "beacon-debug-wallet:build:development"
+              "browserTarget": "octez.connect-debug-wallet:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -81,7 +81,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "beacon-debug-wallet:build"
+            "browserTarget": "octez.connect-debug-wallet:build"
           }
         },
         "test": {
@@ -108,5 +108,5 @@
       }
     }
   },
-  "defaultProject": "beacon-debug-wallet"
+  "defaultProject": "octez.connect-debug-wallet"
 }
