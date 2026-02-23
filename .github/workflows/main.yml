@@ -16,10 +16,10 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-      - name: Node 15
-        uses: actions/setup-node@v1
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
         with:
-          node-version: 15.x
+          node-version: 22.x
 
       - name: Prepare
         run: npm ci
@@ -28,7 +28,7 @@ jobs:
       #   run: npm run actions:prettier
 
       - name: Build
-        run: npm run build -- --prod
+        run: npm run build:prod
 
       - name: Upload
         uses: actions/upload-artifact@v4
@@ -51,10 +51,10 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-      - name: Node 15
-        uses: actions/setup-node@v1
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
         with:
-          node-version: 15.x
+          node-version: 22.x
 
       - name: Prepare
         run: npm ci
