@@ -102,7 +102,7 @@ export class ApiService {
     const url = `${rpc}/chains/main/blocks/head/context/contracts/${address}/manager_key`;
     const response = await this.http.get<string | null>(url).toPromise();
     console.log(response);
-    return response;
+    return response ?? null;
   }
 
   public async selectRpc(network: NetworkType, rpc: string) {

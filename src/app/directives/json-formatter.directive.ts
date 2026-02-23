@@ -2,7 +2,8 @@ import { ElementRef, OnChanges, Directive, Input } from '@angular/core'
 import JSONFormatter from 'json-formatter-js'
 
 @Directive({
-  selector: 'json-formatter'
+  selector: 'json-formatter',
+  standalone: false
 })
 export class JsonFormatterDirective implements OnChanges {
   @Input() json: any

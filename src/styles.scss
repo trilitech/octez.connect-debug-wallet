@@ -1,14 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* custom colors */
-$theme-colors: (
-  "primary": #3880ff,
+@use "bootstrap/scss/bootstrap" with (
+  $theme-colors: (
+    "primary": #3880ff,
+  ),
+  $card-border-color: #fafafa,
+  $card-spacer-y: 1.5rem,
+  $card-cap-bg: #fff,
+  $link-hover-decoration: none
 );
-
-$card-border-color: #fafafa;
-$card-spacer-y: 1.5rem;
-$card-cap-bg: #fff;
-$link-hover-decoration: none;
 
 .card {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -27,8 +28,5 @@ $link-hover-decoration: none;
   border-bottom-right-radius: 0 !important;
 }
 
-/* Importing Bootstrap SCSS file. */
-@import "~bootstrap/scss/bootstrap";
-
 /* Importing Datepicker SCSS file. */
-@import "~ngx-bootstrap/datepicker/bs-datepicker";
+@import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";

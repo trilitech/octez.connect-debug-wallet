@@ -21,7 +21,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "outputPath": "dist/octez.connect-debug-wallet",
             "index": "src/index.html",
@@ -31,14 +31,28 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.scss"],
-            "scripts": []
+            "scripts": [],
+            "customWebpackConfig": {
+              "path": "custom-webpack.config.js"
+            },
+            "allowedCommonJsDependencies": [
+              "@tezos-x/octez.connect-ui",
+              "@tezos-x/octez.js-http-utils",
+              "@walletconnect/environment",
+              "@walletconnect/time",
+              "@walletconnect/window-getters",
+              "@walletconnect/window-metadata",
+              "elliptic",
+              "events",
+              "js-sha3"
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
+                  "maximumWarning": "3.3mb",
                   "maximumError": "6mb"
                 },
                 {
@@ -53,6 +67,14 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": true
+              },
               "outputHashing": "all"
             },
             "development": {
@@ -67,13 +89,16 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular-builders/custom-webpack:dev-server",
+          "options": {
+            "poll": 2000
+          },
           "configurations": {
             "production": {
-              "browserTarget": "octez.connect-debug-wallet:build:production"
+              "buildTarget": "octez.connect-debug-wallet:build:production"
             },
             "development": {
-              "browserTarget": "octez.connect-debug-wallet:build:development"
+              "buildTarget": "octez.connect-debug-wallet:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -81,7 +106,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "octez.connect-debug-wallet:build"
+            "buildTarget": "octez.connect-debug-wallet:build"
           }
         },
         "test": {
@@ -107,6 +132,5 @@
         }
       }
     }
-  },
-  "defaultProject": "octez.connect-debug-wallet"
+  }
 }

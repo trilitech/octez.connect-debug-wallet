@@ -14,6 +14,7 @@ import { NetworkType } from '@tezos-x/octez.connect-types';
   selector: 'app-accounts-selection',
   templateUrl: './accounts-selection.component.html',
   styleUrls: ['./accounts-selection.component.scss'],
+  standalone: false,
 })
 export class AccountsSelectionComponent implements OnInit {
   accounts$: Observable<Account[]> | undefined;

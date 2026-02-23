@@ -14,6 +14,7 @@ import { BeaconService } from 'src/app/services/beacon.service';
   selector: 'app-accounts-overview',
   templateUrl: './accounts-overview.component.html',
   styleUrls: ['./accounts-overview.component.scss'],
+  standalone: false,
 })
 export class AccountsOverviewComponent implements OnInit {
   title?: string;

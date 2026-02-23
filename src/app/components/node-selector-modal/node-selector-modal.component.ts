@@ -6,6 +6,7 @@ import { NetworkType } from '@tezos-x/octez.connect-types';
   selector: 'app-node-selector-modal',
   templateUrl: './node-selector-modal.component.html',
   styleUrls: ['./node-selector-modal.component.scss'],
+  standalone: false,
 })
 export class NodeSelectorModalComponent implements OnInit {
   public customNodeAddress: string = '';
