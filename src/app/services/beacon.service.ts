@@ -20,7 +20,7 @@ import { Injectable } from '@angular/core';
 
 import { first } from 'rxjs/operators';
 
-import { RpcClient, OperationContents, OpKind } from '@tezos-x/octez.js-rpc';
+import { RpcClient, OperationContents, OpKind } from '@taquito/rpc';
 import { Account, AccountService, AccountType } from './account.service';
 import { AccountsSelectionComponent } from '../components/accounts-selection/accounts-selection.component';
 import { BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
