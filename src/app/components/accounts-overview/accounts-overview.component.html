@@ -15,6 +15,10 @@
     Wallet.
   </p>
 
+  <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+    {{ errorMessage }}
+  </div>
+
   <div>
     <h6>Watch-Only Wallet</h6>
     <div class="input-group mb-3">

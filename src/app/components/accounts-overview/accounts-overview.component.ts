@@ -21,6 +21,8 @@ export class AccountsOverviewComponent implements OnInit {
   closeBtnName?: string;
   list: any[] = [];
 
+  errorMessage?: string;
+
   address: string = '';
 
   accounts$: Observable<Account[]>;
@@ -37,53 +39,68 @@ export class AccountsOverviewComponent implements OnInit {
   ngOnInit(): void {}
 
   async addBeaconWallet() {
-    await this.beacon.dAppClient.clearActiveAccount();
+    this.errorMessage = undefined;
+    try {
+      await this.beacon.dAppClient.clearActiveAccount();
 
-    this.beacon.dAppClient.network = { type: NetworkType.MAINNET };
-    const permissions = await this.beacon.dAppClient.requestPermissions({});
-    const publicKey =
-      permissions.publicKey ??
-      (await this.api.getPublicKeyForAddress(permissions.address))?.publicKey;
-    if (!publicKey) {
-      throw new Error('NO PUBLIC KEY FOUND, PLEASE REVEAL ADDRESS');
+      this.beacon.dAppClient.network = { type: NetworkType.MAINNET };
+      const permissions = await this.beacon.dAppClient.requestPermissions({});
+
+      const publicKey =
+        permissions.publicKey ??
+        (await this.api.getPublicKeyForAddress(permissions.address))?.publicKey;
+
+      if (!publicKey) {
+        this.errorMessage =
+          'No public key found for this address. Please reveal the address on-chain, then try again.';
+        return;
+      }
+
+      const peers = await this.beacon.dAppClient.getPeers();
+
+      const peer = peers.find(
+        (peer) => (peer as any).senderId === permissions.senderId
+      );
+
+      this.accountService.addOrUpdateAccount({
+        address: permissions.address,
+        publicKey,
+        type: AccountType.BEACON,
+        description: '',
+        tags: [],
+        network: NetworkType.MAINNET, // TODO: Remove?
+        wallet: { name: peer?.name ?? '' },
+      });
+
+      this.bsModalRef.hide();
+    } catch (error) {
+      console.error('Failed to connect wallet', error);
+      this.errorMessage =
+        'Failed to connect wallet. Please try again (or check your RPC/network connection).';
     }
-
-    const peers = await this.beacon.dAppClient.getPeers();
-
-    const peer = peers.find(
-      (peer) => (peer as any).senderId === permissions.senderId
-    );
-
-    this.accountService.addOrUpdateAccount({
-      address: permissions.address,
-      publicKey,
-      type: AccountType.BEACON,
-      description: '',
-      tags: [],
-      network: NetworkType.MAINNET, // TODO: Remove?
-      wallet: { name: peer?.name ?? '' },
-    });
-
-    this.bsModalRef.hide();
   }
 
   async addWatchOnlyWallet() {
-    const publicKeyInfo = await this.api.getPublicKeyForAddress(this.address);
-    if (!publicKeyInfo) {
-      throw new Error('NO PUBLIC KEY FOUND, PLEASE REVEAL ADDRESS');
+    this.errorMessage = undefined;
+    try {
+      const publicKeyInfo = await this.api.getPublicKeyForAddress(this.address);
+
+      this.accountService.addOrUpdateAccount({
+        address: this.address,
+        publicKey: publicKeyInfo.publicKey,
+        type: AccountType.WATCH_ONLY,
+        description: '',
+        tags: [],
+        network: publicKeyInfo.network,
+        wallet: { name: '' },
+      });
+
+      this.bsModalRef.hide();
+    } catch (error) {
+      console.error('Failed to add watch-only wallet', error);
+      this.errorMessage =
+        'No public key found for this address. Please reveal the address on-chain, then try again.';
     }
-
-    this.accountService.addOrUpdateAccount({
-      address: this.address,
-      publicKey: publicKeyInfo.publicKey,
-      type: AccountType.WATCH_ONLY,
-      description: '',
-      tags: [],
-      network: publicKeyInfo.network,
-      wallet: { name: '' },
-    });
-
-    this.bsModalRef.hide();
   }
 
   async addMnemonic() {}

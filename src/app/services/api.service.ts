@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 import { NetworkType } from '@tezos-x/octez.connect-types';
 import { StorageService } from './storage.service';
@@ -39,7 +40,7 @@ const defaultNodes = {
   [NetworkType.HANGZHOUNET]: {
     selected: 'https://hangzhounet.api.tez.ie',
     all: ['https://hangzhounet.api.tez.ie'],
-  }
+  },
 };
 
 @Injectable({
@@ -84,7 +85,7 @@ export class ApiService {
       url: this.RPCs.mainnet.selected,
     });
 
-    for (let rpc of RPCs) {
+    for (const rpc of RPCs) {
       const result = await this.getPublicKeyForAddressFromRPC(rpc.url, address);
 
       if (result) {
@@ -100,8 +101,7 @@ export class ApiService {
     address: string
   ): Promise<string | null> {
     const url = `${rpc}/chains/main/blocks/head/context/contracts/${address}/manager_key`;
-    const response = await this.http.get<string | null>(url).toPromise();
-    console.log(response);
+    const response = await firstValueFrom(this.http.get<string | null>(url));
     return response ?? null;
   }
 
