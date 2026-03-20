@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/beacon-debug-wallet'),
+      dir: require('path').join(__dirname, './coverage/octez.connect-debug-wallet'),
       subdir: '.',
       reporters: [
         { type: 'html' },

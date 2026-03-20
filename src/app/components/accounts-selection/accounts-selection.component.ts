@@ -8,12 +8,13 @@ import {
   AccountType,
 } from 'src/app/services/account.service';
 
-import { NetworkType } from '@airgap/beacon-types';
+import { NetworkType } from '@tezos-x/octez.connect-types';
 
 @Component({
   selector: 'app-accounts-selection',
   templateUrl: './accounts-selection.component.html',
   styleUrls: ['./accounts-selection.component.scss'],
+  standalone: false,
 })
 export class AccountsSelectionComponent implements OnInit {
   accounts$: Observable<Account[]> | undefined;

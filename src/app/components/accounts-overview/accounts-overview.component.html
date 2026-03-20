@@ -11,9 +11,13 @@
 </div>
 <div class="modal-body">
   <p class="pb-4">
-    Select one of the following options to add a new account to the Beacon Debug
+    Select one of the following options to add a new account to the Octez.connect Debug
     Wallet.
   </p>
+
+  <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+    {{ errorMessage }}
+  </div>
 
   <div>
     <h6>Watch-Only Wallet</h6>
@@ -40,7 +44,7 @@
 <hr />
 <div class="modal-body">
   <div class="pb-3">
-    <h6>Beacon Compatible Wallet</h6>
+    <h6>Octez.connect Compatible Wallet</h6>
     <button type="button" class="btn btn-primary" (click)="addBeaconWallet()">
       Connect Wallet
     </button>

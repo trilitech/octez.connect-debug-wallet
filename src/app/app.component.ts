@@ -1,4 +1,4 @@
-import { PeerInfo, PermissionInfo } from '@airgap/beacon-types';
+import { PeerInfo, PermissionInfo } from '@tezos-x/octez.connect-types';
 import { Component, OnInit } from '@angular/core';
 import { BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
@@ -16,6 +16,7 @@ import { BeaconService, LogAction } from './services/beacon.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   isCollapsed = true;
@@ -95,7 +96,8 @@ export class AppComponent implements OnInit {
     bsModalRef.onHide?.pipe(first()).subscribe(async (result) => {
       if (result === 'confirm') {
         await this.beacon.walletClient.removePermission(
-          permission.accountIdentifier
+          permission.accountIdentifier,
+          permission.senderId
         );
         this.getPeers();
       }

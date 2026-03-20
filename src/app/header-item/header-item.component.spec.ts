@@ -1,6 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { HeaderItemComponent } from './header-item.component';
+
+class MockBsModalService {
+  show() {
+    return { onHide: of(undefined) } as any;
+  }
+}
 
 describe('HeaderItemComponent', () => {
   let component: HeaderItemComponent;
@@ -8,7 +16,8 @@ describe('HeaderItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HeaderItemComponent ]
+      declarations: [HeaderItemComponent],
+      providers: [{ provide: BsModalService, useClass: MockBsModalService }],
     })
     .compileComponents();
   });

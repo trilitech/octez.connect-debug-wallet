@@ -7,6 +7,7 @@ import { ConfirmModalComponent } from '../components/confirm-modal/confirm-modal
   selector: 'app-header-item',
   templateUrl: './header-item.component.html',
   styleUrls: ['./header-item.component.scss'],
+  standalone: false,
 })
 export class HeaderItemComponent implements OnInit {
   status = '';

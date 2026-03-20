@@ -5,6 +5,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   selector: 'app-how-to-modal',
   templateUrl: './how-to-modal.component.html',
   styleUrls: ['./how-to-modal.component.scss'],
+  standalone: false,
 })
 export class HowToModalComponent implements OnInit {
   closeBtnName?: string;

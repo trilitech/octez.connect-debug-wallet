@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
-import { NetworkType } from '@airgap/beacon-types';
+import { NetworkType } from '@tezos-x/octez.connect-types';
 import { StorageService } from './storage.service';
 
 const defaultNodes = {
@@ -40,10 +41,6 @@ const defaultNodes = {
     selected: 'https://hangzhounet.api.tez.ie',
     all: ['https://hangzhounet.api.tez.ie'],
   },
-  [NetworkType.IDIAZABALNET]: {
-    selected: '',
-    all: [],
-  },
 };
 
 @Injectable({
@@ -57,7 +54,6 @@ export class ApiService {
     [NetworkType.FLORENCENET]: { selected: string; all: string[] };
     [NetworkType.GRANADANET]: { selected: string; all: string[] };
     [NetworkType.HANGZHOUNET]: { selected: string; all: string[] };
-    [NetworkType.IDIAZABALNET]: { selected: string; all: string[] };
   } = defaultNodes;
 
   constructor(
@@ -89,7 +85,7 @@ export class ApiService {
       url: this.RPCs.mainnet.selected,
     });
 
-    for (let rpc of RPCs) {
+    for (const rpc of RPCs) {
       const result = await this.getPublicKeyForAddressFromRPC(rpc.url, address);
 
       if (result) {
@@ -105,9 +101,8 @@ export class ApiService {
     address: string
   ): Promise<string | null> {
     const url = `${rpc}/chains/main/blocks/head/context/contracts/${address}/manager_key`;
-    const response = await this.http.get<string | null>(url).toPromise();
-    console.log(response);
-    return response;
+    const response = await firstValueFrom(this.http.get<string | null>(url));
+    return response ?? null;
   }
 
   public async selectRpc(network: NetworkType, rpc: string) {
