@@ -5,7 +5,7 @@ import { firstValueFrom } from 'rxjs';
 import { NetworkType } from '@tezos-x/octez.connect-types';
 import { StorageService } from './storage.service';
 
-const defaultNodes = {
+const defaultNodes: Record<string, { selected: string; all: string[] }> = {
   [NetworkType.MAINNET]: {
     selected: 'https://mainnet.api.tez.ie',
     all: [
@@ -13,33 +13,15 @@ const defaultNodes = {
       'https://mainnet.smartpy.io',
       'https://rpc.tzbeta.net',
       'https://teznode.letzbake.com',
-      'https://mainnet-tezos.giganode.io',
     ],
   },
-  [NetworkType.DELPHINET]: {
-    selected: '',
-    all: [],
+  [NetworkType.GHOSTNET]: {
+    selected: 'https://rpc.ghostnet.teztnets.com',
+    all: ['https://rpc.ghostnet.teztnets.com'],
   },
-  [NetworkType.EDONET]: {
-    selected: '',
-    all: [],
-  },
-  [NetworkType.FLORENCENET]: {
-    selected: '',
-    all: [],
-  },
-  [NetworkType.GRANADANET]: {
-    selected: 'https://granadanet.api.tez.ie',
-    all: [
-      'https://granadanet.api.tez.ie',
-      'https://granadanet.smartpy.io',
-      'https://rpczero.tzbeta.net',
-      'https://testnet-tezos.giganode.io/',
-    ],
-  },
-  [NetworkType.HANGZHOUNET]: {
-    selected: 'https://hangzhounet.api.tez.ie',
-    all: ['https://hangzhounet.api.tez.ie'],
+  [NetworkType.SHADOWNET]: {
+    selected: 'https://tezos-shadownet.octez.io',
+    all: ['https://tezos-shadownet.octez.io'],
   },
 };
 
@@ -47,14 +29,7 @@ const defaultNodes = {
   providedIn: 'root',
 })
 export class ApiService {
-  public RPCs: {
-    [NetworkType.MAINNET]: { selected: string; all: string[] };
-    [NetworkType.DELPHINET]: { selected: string; all: string[] };
-    [NetworkType.EDONET]: { selected: string; all: string[] };
-    [NetworkType.FLORENCENET]: { selected: string; all: string[] };
-    [NetworkType.GRANADANET]: { selected: string; all: string[] };
-    [NetworkType.HANGZHOUNET]: { selected: string; all: string[] };
-  } = defaultNodes;
+  public RPCs: Record<string, { selected: string; all: string[] }> = defaultNodes;
 
   constructor(
     public readonly http: HttpClient,
