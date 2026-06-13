@@ -129,8 +129,9 @@
           "builder": "angular-cli-ghpages:deploy",
           "options": {
             "baseHref": "/",
+            "dir": "dist/octez.connect-debug-wallet",
             "message": "Deploying latest changes",
-            "cname": "debug.walletbeacon.io"
+            "cname": "debug.octez-connect.com"
           }
         }
       }
