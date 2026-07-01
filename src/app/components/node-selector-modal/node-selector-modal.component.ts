@@ -13,7 +13,6 @@ export class NodeSelectorModalComponent implements OnInit {
   public customNodeNetwork: NetworkType = NetworkType.MAINNET;
   public networks: string[] = [
     NetworkType.MAINNET,
-    NetworkType.GHOSTNET,
     NetworkType.SHADOWNET,
   ];
 
