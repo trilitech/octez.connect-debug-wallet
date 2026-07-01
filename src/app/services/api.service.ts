@@ -5,23 +5,28 @@ import { firstValueFrom } from 'rxjs';
 import { NetworkType } from '@tezos-x/octez.connect-types';
 import { StorageService } from './storage.service';
 
+// Bump this when the default node list changes so stale nodes cached in
+// localStorage (e.g. dead RPCs like mainnet.api.tez.ie) are discarded.
+const STORAGE_KEY = 'nodes_v2';
+
 const defaultNodes: Record<string, { selected: string; all: string[] }> = {
   [NetworkType.MAINNET]: {
-    selected: 'https://mainnet.api.tez.ie',
+    selected: 'https://tezos-mainnet.octez.io',
     all: [
-      'https://mainnet.api.tez.ie',
+      'https://tezos-mainnet.octez.io',
       'https://mainnet.smartpy.io',
       'https://rpc.tzbeta.net',
-      'https://teznode.letzbake.com',
+      'https://rpc.tzkt.io/mainnet',
     ],
-  },
-  [NetworkType.GHOSTNET]: {
-    selected: 'https://rpc.ghostnet.teztnets.com',
-    all: ['https://rpc.ghostnet.teztnets.com'],
   },
   [NetworkType.SHADOWNET]: {
     selected: 'https://tezos-shadownet.octez.io',
-    all: ['https://tezos-shadownet.octez.io'],
+    all: [
+      'https://tezos-shadownet.octez.io',
+      'https://shadownet.smartpy.io',
+      'https://rpc.shadownet.teztnets.com',
+      'https://rpc.tzkt.io/shadownet',
+    ],
   },
 };
 
@@ -36,7 +41,7 @@ export class ApiService {
     private readonly storage: StorageService
   ) {
     try {
-      const parsedNodes = JSON.parse(localStorage.getItem('nodes') ?? '');
+      const parsedNodes = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '');
       this.RPCs = parsedNodes;
     } catch {}
   }
@@ -83,7 +88,7 @@ export class ApiService {
   public async selectRpc(network: NetworkType, rpc: string) {
     (this.RPCs as any)[network].selected = rpc;
 
-    localStorage.setItem('nodes', JSON.stringify(this.RPCs));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(this.RPCs));
   }
 
   public async addCustomRpc(network: NetworkType, rpc: string) {
