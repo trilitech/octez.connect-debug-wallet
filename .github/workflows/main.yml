@@ -48,24 +48,12 @@ jobs:
           name: angular_dist
           path: dist
 
-      - name: Detect S3 bucket region
-        id: bucket
-        run: |
-          # S3 returns the bucket's home region in this header even on an
-          # unauthenticated 403, so no region secret is needed. Path-style
-          # request keeps this working for bucket names that contain dots.
-          REGION=$(curl -sI "https://s3.amazonaws.com/${{ secrets.S3_BUCKET }}" \
-            | tr -d '\r' | awk 'tolower($1) == "x-amz-bucket-region:" { print $2 }')
-          REGION="${REGION:-us-east-1}"
-          echo "Detected bucket region: $REGION"
-          echo "region=$REGION" >> "$GITHUB_OUTPUT"
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ steps.bucket.outputs.region }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Sync to S3
         run: |
