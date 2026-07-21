@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, provideZoneChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -45,7 +45,12 @@ import { LoadingModalComponent } from './components/loading-modal/loading-modal.
     AccordionModule.forRoot(),
     CollapseModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    // Angular 21 defaults to zoneless change detection; this app's UI (the
+    // message log) is updated from octez.connect SDK callbacks, which only
+    // trigger rendering under zone-based change detection.
+    provideZoneChangeDetection(),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

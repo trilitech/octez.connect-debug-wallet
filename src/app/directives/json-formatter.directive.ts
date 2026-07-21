@@ -18,7 +18,10 @@ export class JsonFormatterDirective implements OnChanges {
         hoverPreviewFieldCount: 5,
         depth: 3
       }
-      const levelsOpen = Infinity
+      // Bounded: v5 SDK messages can contain cyclic references, and opening
+      // Infinity levels recurses forever (the stack overflow aborts the whole
+      // change-detection pass). Deeper levels still expand lazily on click.
+      const levelsOpen = 3
       const formatter = new JSONFormatter(this.json, levelsOpen, config)
       this.elRef.nativeElement.appendChild(formatter.render())
     }
