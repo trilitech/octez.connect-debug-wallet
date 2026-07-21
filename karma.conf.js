@@ -38,6 +38,13 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['Chrome'],
+    customLaunchers: {
+      // For containers/CI where Chrome's sandbox cannot start.
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage']
+      }
+    },
     singleRun: false,
     restartOnFileChange: true
   });

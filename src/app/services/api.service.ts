@@ -7,7 +7,7 @@ import { StorageService } from './storage.service';
 
 // Bump this when the default node list changes so stale nodes cached in
 // localStorage (e.g. dead RPCs like mainnet.api.tez.ie) are discarded.
-const STORAGE_KEY = 'nodes_v2';
+const STORAGE_KEY = 'nodes_v3';
 
 const defaultNodes: Record<string, { selected: string; all: string[] }> = {
   [NetworkType.MAINNET]: {
@@ -28,13 +28,19 @@ const defaultNodes: Record<string, { selected: string; all: string[] }> = {
       'https://rpc.tzkt.io/shadownet',
     ],
   },
+  // Tezos X L2 (Michelson runtime) previewnet — the L2 whose L1 is shadownet.
+  [NetworkType.TEZOSX_PREVIEWNET]: {
+    selected: 'https://michelson.previewnet.tezosx.nomadic-labs.com',
+    all: ['https://michelson.previewnet.tezosx.nomadic-labs.com'],
+  },
 };
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  public RPCs: Record<string, { selected: string; all: string[] }> = defaultNodes;
+  public RPCs: Record<string, { selected: string; all: string[] }> =
+    defaultNodes;
 
   constructor(
     public readonly http: HttpClient,
